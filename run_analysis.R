@@ -78,10 +78,14 @@ q2_final_data<-q2_data[-c(q2_data_names)]
 #Appropriately labels the data set with descriptive variable names
 # add subjects and activity index
 q3_data <- cbind(q1_full_data$subj,q1_full_data$act_c_tr,q2_final_data)
+#rename first 2 columns
 colnames(q3_data)[1:2]<-c("subj","act_code")
+##rename columns in activity_labels
 colnames(activity_labels)[1:2] <- c("act_code","act_name")
+#merge data by act_cod
 q3_final_data <- merge(q3_data,activity_labels, by = 'act_code')
 q4_final_data <- q3_final_data #it's just foravoid misunderstanding
+#get final data
 write.table(q4_final_data, "./course_project/q4_data.txt", sep="\t", row.names = FALSE)
 
 #q5 From the q4_final_data, create independent tidy data set with the average of each variable for each activity and each subject.
