@@ -1,10 +1,13 @@
 getwd()
-setwd("C:/Users/Zorikto/Desktop/CE_Getting and cleaning data/course_project")
+setwd("C:/Users/Public/Documents")
+dir.create("course_project")
+setwd("C:/Users/Public/Documents/course_project")
+#download files from here and put folder "UCI HAR Dataset" un your working directory
 list.files("./UCI HAR Dataset/test")
 list.files("./UCI HAR Dataset/train")
 list.files("./UCI HAR Dataset")
 
-#q1
+#q1 Merges the training and the test sets to create one data set.
 #upload common dat into R
 activity_labels <- read.table("./UCI HAR Dataset/activity_labels.txt")
 variable_names <-read.table("./UCI HAR Dataset/features.txt")
@@ -18,7 +21,7 @@ activity_code_train<-read.table("./UCI HAR Dataset/train/y_train.txt")
 colnames(activity_code_train) <-c("act_c_tr")
 
 
-#upload and prepare test data into R
+#upload and prepare test data into R and Appropriately labels the data set with descriptive variable names
 x_test_data<-read.table("./UCI HAR Dataset/test/X_test.txt")
 colnames(x_test_data) <-c(t(variable_names[-c(1)]))
 subject_test<- read.table("./UCI HAR Dataset/test/subject_test.txt")
@@ -32,7 +35,7 @@ full_x_train_data <- cbind(subject_train,activity_code_train,x_train_data)
 full_x_test_data <- cbind(subject_test,activity_code_test,x_test_data)
 q1_final_data<- rbind(full_x_train_data, full_x_test_data)
 
-#q2
+#q2 Extracting only the measurements on the mean and standard deviation for each measurement. 
 q2_var_names <- names(q1_final_data)
 q2_var_names<-grep("mean|std",q2_var_names)
 q2_var_names
@@ -44,7 +47,9 @@ q2_data_names<-grep("meanFreq",q2_data_names)
 q2_data_names
 q2_final_data<-q2_data[-c(q2_data_names)]
 
-#q3/4
+#q3/4 Using descriptive activity names to name the activities in the data set and
+#Appropriately labels the data set with descriptive variable names
+
 q3_data <- cbind(q1_full_data$subj,q1_full_data$act_c_tr,q2_final_data)
 colnames(q3_data)[1:2]<-c("subj","act_code")
 colnames(activity_labels)[1:2] <- c("act_code","act_name")
@@ -52,7 +57,7 @@ q3_final_data <- merge(q3_data,activity_labels, by = 'act_code')
 q4_final_data <- q3_final_data #it's just foravoid misunderstanding
 write.table(q4_final_data, "./course_project/q4_data.txt", sep="\t", row.names = FALSE)
 
-#q5
+#q5 From the q4_final_data, create independent tidy data set with the average of each variable for each activity and each subject.
 tidy_data<-aggregate(q4_final_data,by=list(activity=q4_final_data$act_name,subjID=q4_final_data$subj),FUN = mean)
 tidy_data<-tidy_data[-c(4,71)]
 write.table(tidy_data, "./course_project/tidy_data.txt", sep="\t", row.names = FALSE)
