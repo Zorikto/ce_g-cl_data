@@ -25,9 +25,9 @@ The dataset is then divided in two parts and they can be used separately.
 
 2. Records of activity windows. Each one composed of: 
  - A 561-feature vector with time and frequency domain variables. 
- - Its associated activity label. 
+ - Its associated activity label.
  - An identifier of the subject who carried out the experiment
- - 
+
 The following files are available for the train and test data. Their descriptions are equivalent
 
 - 'features_info.txt': Shows information about the variables used on the feature vector.
