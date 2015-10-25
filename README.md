@@ -1,5 +1,6 @@
 # ce_g-cl_data
 Coursera Getting and cleaning data course project
+
 Author:Zorikto Dabaev
 Date: 25/10/2015
 Output: tidy_data.txt, run_analysis.R
